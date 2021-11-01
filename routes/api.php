@@ -1,6 +1,10 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\LoginController;
+use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,6 +18,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
+//Route::get('/login', function (Request $request) {
+//
+////    dd($request->user());
+//    $user = User::find('1');
+//    $token = $user->createToken('api')->accessToken;
+//    return response(['mes' => $token]);
+//});
+
+Route::post('/register', [RegisterController::class, 'register']);
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:api');
+
+Route::get('/user', [RegisterController::class, 'user'])->middleware('auth:api');
+
+
