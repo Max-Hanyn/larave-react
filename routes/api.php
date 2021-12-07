@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Role\RoleController;
+use App\Http\Controllers\Api\User\UserController;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -18,18 +20,33 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-//Route::get('/login', function (Request $request) {
-//
-////    dd($request->user());
-//    $user = User::find('1');
-//    $token = $user->createToken('api')->accessToken;
-//    return response(['mes' => $token]);
-//});
 
 Route::post('/register', [RegisterController::class, 'register']);
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->middleware('auth:api');
 
-Route::get('/user', [RegisterController::class, 'user'])->middleware('auth:api');
+
+
+Route::get('/user/{id?}', [UserController::class, 'getUser'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::put('/user/{id?}', [UserController::class, 'updateUser'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::put('/user/role', [UserController::class, 'updateUserRole'])->middleware('auth:api');
+Route::get('/user/list', [UserController::class, 'getAllUsers'])->middleware('auth:api');
+
+
+
+Route::get('/role/{id}', [RoleController::class, 'getRole'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::post('/role', [RoleController::class, 'addRole'])->middleware('auth:api');
+Route::put('/role', [RoleController::class, 'updateRole'])->middleware('auth:api');
+Route::delete('/role', [RoleController::class, 'removeRole'])->middleware('auth:api');
+Route::get('/role/list', [RoleController::class, 'getAllRoles'])->middleware('auth:api');
+
+Route::post('/user/friends/{id}', [UserController::class, 'addUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::put('/user/friends/accept/{id}', [UserController::class, 'acceptUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::post('/user/friends/delete/{id}', [UserController::class, 'deleteUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::post('/user/friends/block/{id}', [UserController::class, 'blockUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+
+
+
+
 
 

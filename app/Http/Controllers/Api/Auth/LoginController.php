@@ -11,7 +11,8 @@ use Illuminate\Support\Facades\Http;
 
 class LoginController extends Controller
 {
-    public function login(LoginFormRequest $request){
+    public function login(LoginFormRequest $request)
+    {
 
         $validated = $request->validated();
 
@@ -37,8 +38,9 @@ class LoginController extends Controller
 
     }
 
-    public function logout(Request $request){
+    public function logout(Request $request)
+    {
 
-        return response()->json(['user' =>  Auth::user()->token()->revoke() ]);
+        return response()->json(['user' => Auth::user()->token()->revoke()]);
     }
 }

@@ -2,37 +2,26 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\DTO\User\UserCreationDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\Auth\RegisterFormRequest;
-use App\Models\User;
-use App\Services\Api\Roles;
-use Illuminate\Foundation\Auth\RegistersUsers;
-use Illuminate\Http\Request;
+use App\Services\Api\UserService;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
 
-    public function register(RegisterFormRequest $request, Roles $roles){
-
-        $validated = $request->validated();
-
-        $user = User::create([
-            'name' => $validated['name'],
-            'email' => $validated['email'],
-            'password' => Hash::make($validated['password']),
-            'role_id' => $roles->getRoleIdBySlug(Roles::MODERATOR_ROLE_SLUG),
-        ]);
-
-        $token = $user->createToken('api')->accessToken;
-
-        return response()->json(['accessToken' => $token], 201);
-
-    }
-
-    public function user()
+    public function register(RegisterFormRequest $request, UserService $userService)
     {
-        return response()->json(['user' => Auth::user()]);
+
+        $userCreationDto = UserCreationDto::fromArray($request->validated());
+
+        $user = $userService->create($userCreationDto);
+
+        $accessToken = $userService->createToken($user);
+
+        return response()->json(['accessToken' => $accessToken], 201);
+
     }
+
 }
