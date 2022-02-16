@@ -42,6 +42,8 @@ Route::put('/role', [RoleController::class, 'updateRole'])->middleware('auth:api
 Route::delete('/role', [RoleController::class, 'removeRole'])->middleware('auth:api');
 Route::get('/role/list', [RoleController::class, 'getAllRoles'])->middleware('auth:api');
 
+Route::delete('/user/friends/delete/{id}', [UserController::class, 'deleteFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
+Route::get('/user/friends/requests/{id?}', [UserController::class, 'listOfUserRequestFriends'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::get('/user/friends/{id?}', [Messages::class, 'get'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::post('/user/friends/{id}', [UserController::class, 'addUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::put('/user/friends/accept/{id}', [UserController::class, 'acceptUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);

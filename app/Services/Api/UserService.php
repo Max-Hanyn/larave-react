@@ -7,6 +7,7 @@ use App\DTO\User\UserDto;
 use App\DTO\User\UserListDTO;
 use App\Models\User;
 use Exception;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Models\Roles as RoleModel;
 use JetBrains\PhpStorm\ArrayShape;
@@ -27,6 +28,11 @@ class UserService
             'email' => $userCreationDto->email,
             'password' => Hash::make($userCreationDto->password),
             'role_id' => $this->roleService->getRoleIdBySlug(RoleService::USER_ROLE_SLUG),
+            'firstName' => '',
+            'lastName' => '',
+            'avatar' => '',
+            'address' => ''
+
         ]);
 
         return UserDto::fromModel($user);
@@ -38,12 +44,7 @@ class UserService
         return User::find($userDto->id)->createToken('name')->accessToken;
     }
 
-    /**
-     * @param int $id
-     * @return UserDto
-     * @throws Exception
-     */
-    public function getUserById(int $id): UserDto
+   function getUserById(int $id)
     {
         $user = User::find($id);
 
@@ -51,7 +52,7 @@ class UserService
             throw new Exception('No user with such id');
         }
 
-        return UserDto::fromModel($user);
+        return $user;
 
 
     }
@@ -75,26 +76,22 @@ class UserService
     /**
      * @param int $page
      * @param int $recordsPerPage
-     * @return array
      */
     #[ArrayShape(['data' => "UserDto[]", 'meta' => "array"])]
-    public function getUsersByPage(int $page = 1, int $recordsPerPage = 10): array
+    public function getUsersByPage(int $page = 1, int $recordsPerPage = 10)
     {
-        $users = User::paginate($recordsPerPage);
+        $users = User::All();
 
-        $meta = [
-            'total' => $users->total(),
-            'currentPage' => $users->currentPage(),
-            'perPage' => $users->perPage(),
-            'lastPage' => $users->lastPage(),
-        ];
+        $id = Auth::id();
+        foreach ($users as $key => $user) {
+            if ($user->isFriendWith(Auth::id())){
+                $users->forget($key);
 
-        $usersDTO = [];
-        $users->each(function ($item, $key) use (&$usersDTO) {
-            $usersDTO[] = UserDto::fromModel($item);
-        });
+            }
 
-        return ['data' => $usersDTO, 'meta' => $meta];
+        }
+
+        return $users->toArray();
 
     }
 

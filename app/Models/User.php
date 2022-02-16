@@ -126,7 +126,9 @@ class User extends Authenticatable
     # користувач уже в друзьях
     public function isFriendWith(int $userId): bool
     {
-        return (bool)$this->friends()->where('id', $userId)->count();
+        return (bool)$this->friends()->where('id', $userId)->count() ||
+            (bool)$this->friendRequests()->where('id', $userId)->count() ||
+            (bool)$this->friendRequestsPending()->where('id', $userId)->count();
     }
 
 

@@ -113,7 +113,12 @@ class PostsService
         }
 
         $posts = $user->posts()->get();
+        foreach ($posts as &$item){
+            $user = User::find($item->user_id);
+            $item->user_id = $user->toArray();
+        }
 
+        $posts = array_reverse($posts->toArray());
         return NewPostDto::collection($posts);
     }
 

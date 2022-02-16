@@ -60,7 +60,7 @@ class UserController extends Controller
 
         $users = $this->userService->getUsersByPage($page);
 
-        return response()->json(['user' => $users]);
+        return response()->json(['users' => $users]);
 
     }
 
@@ -118,5 +118,19 @@ class UserController extends Controller
         $user = User::find($id);
         $friends = $user->friends();
         return response()->json(['friends' => $friends]);
+    }
+
+    public function listOfUserRequestFriends(int $userId = 0): JsonResponse
+    {
+        $id = $userId ? $userId : Auth::id();
+        $user = User::find($id);
+        $friends = $user->friendRequests();
+        return response()->json(['friends' => $friends]);
+    }
+
+    public function deleteFriend($id){
+        $user = User::find(Auth::id())->deleteFriend($id);
+        return response()->json(['success' => true]);
+
     }
 }
