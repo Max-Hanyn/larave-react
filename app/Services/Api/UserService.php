@@ -32,7 +32,7 @@ class UserService
             'lastName' => '',
             'avatar' => '',
             'address' => ''
-
+ 
         ]);
 
         return UserDto::fromModel($user);
