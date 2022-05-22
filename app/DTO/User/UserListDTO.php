@@ -18,16 +18,11 @@ class UserListDTO extends DataTransferObject
     {
         $usersDTO = [];
         $users->each(function ($item, $key) use (&$usersDTO) {
-//            dd(UserDto::fromModel($item));
             $usersDTO[] = UserDto::fromModel($item);
         });
 
-        dd($usersDTO);
-
         return new static(
-
             $usersDTO
-
         );
 
     }

@@ -20,7 +20,7 @@ class Roles extends Model
         'slug',
     ];
 
-    public function role(){
+    public function posts(){
 
         return $this->belongsTo(User::class);
     }

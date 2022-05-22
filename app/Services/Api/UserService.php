@@ -139,7 +139,7 @@ class UserService
         }
 
         $friend = User::find($friendId);
-        if (!$friendId) {
+        if (!$friend) {
             throw new Exception('User doesn\'nt exist with id' . $friendId);
         }
 

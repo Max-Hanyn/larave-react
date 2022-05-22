@@ -50,6 +50,11 @@ class User extends Authenticatable
         return $this->belongsTo(Roles::class);
     }
 
+    public function posts()
+    {
+        return $this->hasMany(Posts::class);
+    }
+
     # встановлюєм відношення багато до багатьох, мої друзі
     public function friendsOfMine()
     {
@@ -114,7 +119,7 @@ class User extends Authenticatable
         ]);
     }
 
-    # пользователь уже в друзьях
+    # користувач уже в друзьях
     public function isFriendWith(int $userId): bool
     {
         return (bool)$this->friends()->where('id', $userId)->count();

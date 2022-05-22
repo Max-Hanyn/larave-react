@@ -18,7 +18,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [TestController::class, 'index'])->middleware(['auth']);
 
 Route::get('/dashboard', function (Request $request) {
-   dd($request);
-})->middleware(['auth'])->name('dashboard');
+ return view('dashboard');
+})->name('dashboard');
 
 require __DIR__.'/auth.php';
