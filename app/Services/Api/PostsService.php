@@ -14,6 +14,12 @@ use Spatie\LaravelData\DataCollection;
 
 class PostsService
 {
+    private ImageService $imageService;
+
+    public function __construct(ImageService $imageService)
+    {
+        $this->imageService = $imageService;
+    }
 
     /**
      * @param NewPostCreationDto $postsDto
@@ -33,22 +39,29 @@ class PostsService
         return $post;
     }
 
-    public function getPostById(int $postId): PostsDto
+    /**
+     * @param int $postId
+     * @return NewPostDto
+     * @throws Exception
+     */
+    public function getPostById(int $postId): NewPostDto
     {
         $post = Posts::find($postId);
 
         if (!$post) {
-            throw new Exception('No such role');
+            throw new Exception('No such post');
         }
-        return PostsDto::fromModel($post);
+
+        $post->image_src = $this->imageService->getImageUrl($post->image_src);
+        return NewPostDto::from($post);
     }
 
     /**
      * @param array $data
-     * @return PostsDto
+     * @return NewPostDto
      * @throws Exception
      */
-    public function updatePostById(array $data): PostsDto
+    public function updatePostById(array $data): NewPostDto
     {
 
         $post = Posts::find($data['id']);
@@ -61,15 +74,15 @@ class PostsService
         $post->content = $data['content'];
         $post->save();
 
-        return PostsDto::fromModel($post);
+        return NewPostDto::from($post);
     }
 
     /**
      * @param int $postId
-     * @return PostsDto
+     * @return NewPostDto
      * @throws Exception
      */
-    public function deletePostById(int $postId): PostsDto
+    public function deletePostById(int $postId): NewPostDto
     {
 
         $post = Posts::find($postId);
@@ -80,7 +93,7 @@ class PostsService
 
         $post->delete();
 
-        return PostsDto::fromModel($post);
+        return NewPostDto::from($post);
 
     }
 
@@ -101,6 +114,14 @@ class PostsService
         $posts = $user->posts()->get();
 
         return NewPostDto::collection($posts);
+    }
+
+    public function getPostsByPage(int $page = 1, int $recordsPerPage = 10): DataCollection
+    {
+        $users = Posts::paginate($recordsPerPage);
+
+        return NewPostDto::collection($users);
+
     }
 
 }

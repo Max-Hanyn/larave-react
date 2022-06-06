@@ -1,0 +1,888 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Social network API",
+        "description": "API for social network site.",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login user",
+                "operationId": "LoginUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "email": {
+                                        "description": "Add email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Add password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "token": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTk3YzM3ZGEzMmIxNDQ0YzYxMmFhNTNhNjY4NWMyNGY0NTZiY2VkMWVlZTI5ODU0MTAzOTY2MTVhNWEyOGJhYWY1NTQzNTllMThhNDZmZWIiLCJpYXQiOjE2NTMzODUwNTkuNDk4NDExLCJuYmYiOjE2NTMzODUwNTkuNDk4NDE2LCJleHAiOjE2ODQ5MjEwNTkuMzU1MjEzLCJzdWIiOiIxNiIsInNjb3BlcyI6W119.aTmcL26LpTa18KQkWLjTfuyhI9eVjoxsK5g7l7xh3Ia4dtYS0WWk-1-_IfaO-TkxhNOROozoVqhV3TYYBDriYdXmFz2DExPVvlVbfgb4tTborAYTDHeMNw3fCA0nbrIS6HxG6XEAhYUDcND4YVlrmx6kAMSCm4PCdYbJHLepXDBIrYjRRTaSoe5aDM5Xpm_HE4XykxUMqzyaiNZLkCKWqCx9Ezck_aM3Tk7CWuh-HZgZ2sJ78GES6RW1osKfszm9hxaIFhnmltzhPFR2VRqLg8BV4lFJVcJJ2iLnbcSzx-KEZnDp-w7-JekjNa1YYA0CnuekGVj4-VToKfTsRjMat2O0ClPWptq1SGkKwP5wgg_P3DNceMleCiC2uRp3XB_ImVhXbujYOwk1Ag7oQto-OOVMslAMkR8u94jek8VDgW1VE1nVBsDby5zDGinPb3GcE5JlFXXLyKv5j39JtBh-xiC4xCH10dsBYGX2N0WTzz2as1a1MWxQ4K9soGYOV0DV7KALMM_tEUn0-_1ZWu3be602Y0y0UPIP9L6NdLaJLC8K0_f0ZbTdSWRtvmDPeLLpTOYisvBtyt560vO3AApNl6xvnKAuS6w0o1Flu4JJF78teg_KpnS3RsKSREYkuQtQplpJqbkck5Xb4FAd-tVT3d7a0-ollMtkVEbdIUsrS4k"
+                                        },
+                                        "token_type": {
+                                            "type": "string",
+                                            "example": "Bearer"
+                                        },
+                                        "expires_at": {
+                                            "type": "string",
+                                            "example": "2022-05-25 10:24:21"
+                                        },
+                                        "User": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Max"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "test@test.test"
+                                                },
+                                                "role": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "number",
+                                                            "example": "1"
+                                                        },
+                                                        "name": {
+                                                            "type": "string",
+                                                            "example": "User"
+                                                        },
+                                                        "email": {
+                                                            "type": "string",
+                                                            "example": "user"
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Logout user",
+                "operationId": "LogoutUser",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "user": {
+                                            "type": "string",
+                                            "example": "true"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Register user",
+                "operationId": "RegisterUser",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "description": "User name",
+                                        "type": "string"
+                                    },
+                                    "email": {
+                                        "description": "Add email",
+                                        "type": "string"
+                                    },
+                                    "password": {
+                                        "description": "Add password",
+                                        "type": "string"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Confirm password",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "accessToken": {
+                                            "type": "string",
+                                            "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJhdWQiOiIxIiwianRpIjoiNTk3YzM3ZGEzMmIxNDQ0YzYxMmFhNTNhNjY4NWMyNGY0NTZiY2VkMWVlZTI5ODU0MTAzOTY2MTVhNWEyOGJhYWY1NTQzNTllMThhNDZmZWIiLCJpYXQiOjE2NTMzODUwNTkuNDk4NDExLCJuYmYiOjE2NTMzODUwNTkuNDk4NDE2LCJleHAiOjE2ODQ5MjEwNTkuMzU1MjEzLCJzdWIiOiIxNiIsInNjb3BlcyI6W119.aTmcL26LpTa18KQkWLjTfuyhI9eVjoxsK5g7l7xh3Ia4dtYS0WWk-1-_IfaO-TkxhNOROozoVqhV3TYYBDriYdXmFz2DExPVvlVbfgb4tTborAYTDHeMNw3fCA0nbrIS6HxG6XEAhYUDcND4YVlrmx6kAMSCm4PCdYbJHLepXDBIrYjRRTaSoe5aDM5Xpm_HE4XykxUMqzyaiNZLkCKWqCx9Ezck_aM3Tk7CWuh-HZgZ2sJ78GES6RW1osKfszm9hxaIFhnmltzhPFR2VRqLg8BV4lFJVcJJ2iLnbcSzx-KEZnDp-w7-JekjNa1YYA0CnuekGVj4-VToKfTsRjMat2O0ClPWptq1SGkKwP5wgg_P3DNceMleCiC2uRp3XB_ImVhXbujYOwk1Ag7oQto-OOVMslAMkR8u94jek8VDgW1VE1nVBsDby5zDGinPb3GcE5JlFXXLyKv5j39JtBh-xiC4xCH10dsBYGX2N0WTzz2as1a1MWxQ4K9soGYOV0DV7KALMM_tEUn0-_1ZWu3be602Y0y0UPIP9L6NdLaJLC8K0_f0ZbTdSWRtvmDPeLLpTOYisvBtyt560vO3AApNl6xvnKAuS6w0o1Flu4JJF78teg_KpnS3RsKSREYkuQtQplpJqbkck5Xb4FAd-tVT3d7a0-ollMtkVEbdIUsrS4k"
+                                        },
+                                        "User": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "name": {
+                                                    "type": "string",
+                                                    "example": "Max"
+                                                },
+                                                "email": {
+                                                    "type": "string",
+                                                    "example": "test@test.test"
+                                                },
+                                                "role": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "name": {
+                                                                "type": "string",
+                                                                "example": "User"
+                                                            },
+                                                            "email": {
+                                                                "type": "string",
+                                                                "example": "user"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/posts": {
+            "put": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Update Post by id",
+                "operationId": "UpdatePostById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "query",
+                        "description": "ID of Post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    },
+                    {
+                        "name": "header",
+                        "in": "query",
+                        "description": "Header of the edit Post",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "header"
+                    },
+                    {
+                        "name": "content",
+                        "in": "query",
+                        "description": "Content of the edit Post",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "content"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "post": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "header": {
+                                                    "type": "string",
+                                                    "example": "title"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "content"
+                                                },
+                                                "user_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "imgage_src": {
+                                                    "type": "string",
+                                                    "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "No post found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Create Posts",
+                "operationId": "NewPost",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "image_src": {
+                                        "description": "Upload image value",
+                                        "type": "file",
+                                        "format": "binary"
+                                    },
+                                    "header": {
+                                        "description": "Add post header",
+                                        "type": "string"
+                                    },
+                                    "content": {
+                                        "description": "Add content post",
+                                        "type": "string"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "header": {
+                                            "type": "string",
+                                            "example": "title"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "content"
+                                        },
+                                        "user_id": {
+                                            "type": "number",
+                                            "example": "1"
+                                        },
+                                        "imgage_src": {
+                                            "type": "string",
+                                            "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "invalid",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "msg": {
+                                            "type": "string",
+                                            "example": "fail"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/{id}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get Post by id",
+                "operationId": "GetPostById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "post": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "header": {
+                                                    "type": "string",
+                                                    "example": "title"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "content"
+                                                },
+                                                "user_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "imgage_src": {
+                                                    "type": "string",
+                                                    "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "No post found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Delete Post by id",
+                "operationId": "DeletePostById",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of Post",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "post": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "header": {
+                                                    "type": "string",
+                                                    "example": "title"
+                                                },
+                                                "content": {
+                                                    "type": "string",
+                                                    "example": "content"
+                                                },
+                                                "user_id": {
+                                                    "type": "number",
+                                                    "example": "1"
+                                                },
+                                                "imgage_src": {
+                                                    "type": "string",
+                                                    "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "No post found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/user/{userId}": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get User Post by id",
+                "operationId": "GetPostsByUserId",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "description": "ID of the User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "post": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": 1
+                                                    },
+                                                    "header": {
+                                                        "type": "string",
+                                                        "example": "title"
+                                                    },
+                                                    "content": {
+                                                        "type": "string",
+                                                        "example": "content"
+                                                    },
+                                                    "user_id": {
+                                                        "type": "number",
+                                                        "example": "1"
+                                                    },
+                                                    "imgage_src": {
+                                                        "type": "string",
+                                                        "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "No post found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        },
+        "/api/posts/list": {
+            "get": {
+                "tags": [
+                    "Posts"
+                ],
+                "summary": "Get Posts by page",
+                "operationId": "GetPostsByPage",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "ID of the User",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "posts": {
+                                            "properties": {
+                                                "data": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "properties": {
+                                                            "id": {
+                                                                "type": "number",
+                                                                "example": 1
+                                                            },
+                                                            "header": {
+                                                                "type": "string",
+                                                                "example": "title"
+                                                            },
+                                                            "content": {
+                                                                "type": "string",
+                                                                "example": "content"
+                                                            },
+                                                            "user_id": {
+                                                                "type": "number",
+                                                                "example": "1"
+                                                            },
+                                                            "imgage_src": {
+                                                                "type": "string",
+                                                                "example": "/storage/GxrusnxMd4oADTTz00e8aK8rVxuyvRuXIcx3oRca.png"
+                                                            }
+                                                        },
+                                                        "type": "object"
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        },
+                                        "meta": {
+                                            "properties": {
+                                                "current_page": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "first_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://laravel/api/posts/list?page=1"
+                                                },
+                                                "from": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "last_page": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "last_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://laravel/api/posts/list?page=5"
+                                                },
+                                                "next_page_url": {
+                                                    "type": "string",
+                                                    "example": "http://laravel/api/posts/list?page=2"
+                                                },
+                                                "path": {
+                                                    "type": "string",
+                                                    "example": "http://laravel/api/posts/list"
+                                                },
+                                                "per_page": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                },
+                                                "prev_page_url": {
+                                                    "type": "number",
+                                                    "example": 1
+                                                },
+                                                "to": {
+                                                    "type": "number",
+                                                    "example": 10
+                                                },
+                                                "total": {
+                                                    "type": "number",
+                                                    "example": 42
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": "false"
+                                        },
+                                        "content": {
+                                            "type": "string",
+                                            "example": "No post found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "passport": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "passport": {
+                "type": "apiKey",
+                "description": "Laravel passport apiKey security.",
+                "in": "header",
+                "scheme": "https",
+                "name": "Authorization",
+                "flows": {
+                    "password": {
+                        "authorizationUrl": "http://laravel/oauth/authorize",
+                        "tokenUrl": "http://laravel/oauth/token",
+                        "refreshUrl": "http://laravel/token/refresh",
+                        "scopes": []
+                    }
+                }
+            }
+        }
+    },
+    "security": [
+        []
+    ]
+}

@@ -9,5 +9,14 @@ use Illuminate\Routing\Controller as BaseController;
 
 class Controller extends BaseController
 {
+    /**
+     * @OA\OpenApi(
+     *     @OA\Info(
+     *         version="1.0",
+     *         title="Social network API",
+     *         description="API for social network site.",
+     *     )
+     * )
+     */
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

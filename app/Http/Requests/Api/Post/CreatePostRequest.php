@@ -26,7 +26,7 @@ class CreatePostRequest extends FormRequest
         return [
             'header' => ['required', 'string', 'max:50'],
             'content' => ['required', 'string', 'max:250'],
-            'image_src' => ['required', 'string', 'max:50'],
+            'image_src' => ['required', 'mimes:png,jpeg,pdf,jpg', 'max:2048'],
         ];
     }
 

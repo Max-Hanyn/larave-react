@@ -2,12 +2,19 @@
 
 namespace Tests\Unit;
 
+use App\DTO\Post\NewPostCreationDto;
 use App\DTO\Post\PostsDto;
+use App\Models\Posts;
 use App\Services\Api\PostsService;
-use PHPUnit\Framework\TestCase;
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Foundation\Testing\DatabaseMigrations;
+
+use Tests\TestCase;
 
 class PostServiceTest extends TestCase
 {
+    use RefreshDatabase;
+
     /**
      * A basic test example.
      *
@@ -25,8 +32,27 @@ class PostServiceTest extends TestCase
             'user_id' => 10
         ];
 
-        $post = $postService->createPost(PostsDto::fromArray($post));
+        $dto = NewPostCreationDto::from($post);
+
+        $post = $postService->createPost($dto);
 
         $this->assertEquals('test', $post->header);
+    }
+
+    /**
+     * @throws \Exception
+     */
+    public function test_getPostById()
+    {
+
+        $postFactory = Posts::factory()->make();
+        $id = $postFactory->header;
+
+        $postService = new PostsService();
+
+
+        $post = $postService->getPostById(1);
+
+        $this->assertEquals('header123', $post->header);
     }
 }
