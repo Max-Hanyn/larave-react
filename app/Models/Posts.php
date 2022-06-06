@@ -24,7 +24,7 @@ class Posts extends Model
         'user_id'
     ];
 
-    public function role(){
+    public function user(){
 
         return $this->belongsTo(User::class);
     }

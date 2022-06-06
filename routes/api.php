@@ -52,6 +52,7 @@ Route::get('/posts/{id}', [PostController::class, 'getPost'])->middleware('auth:
 Route::put('/posts', [PostController::class, 'updatePost'])->middleware('auth:api');
 Route::delete('/posts/{id}', [PostController::class, 'deletePost'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::get('/posts/user/{userId?}', [PostController::class, 'getUserPosts'])->middleware('auth:api')->where(['userId' => '[0-9]+']);
+Route::get('/posts/list', [PostController::class, 'getPostsByPage'])->middleware('auth:api');
 
 
 
