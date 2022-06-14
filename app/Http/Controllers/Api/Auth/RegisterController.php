@@ -115,15 +115,16 @@ class RegisterController extends Controller
     public function register(RegisterFormRequest $request, UserService $userService): JsonResponse
     {
 
-//        $userCreationDto = UserCreationDto::fromArray($request->validated());
-//
-//        $user = $userService->create($userCreationDto);
-//
-//        $accessToken = $userService->createToken($user);
+        $userCreationDto = UserCreationDto::fromArray($request->validated());
 
-        NewMessage::dispatch('gfdgdf');
+        $user = $userService->create($userCreationDto);
 
-        return 201;
+        $accessToken = $userService->createToken($user);
+
+//        NewMessage::dispatch('gfdgdf');
+
+        return response()->json(['token' => $accessToken, 'user' => $user], 200);
+
 
     }
 

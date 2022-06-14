@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\Auth\LoginController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Messages\Messages;
 use App\Http\Controllers\Api\Post\PostController;
 use App\Http\Controllers\Api\Role\RoleController;
 use App\Http\Controllers\Api\User\UserController;
@@ -41,11 +42,13 @@ Route::put('/role', [RoleController::class, 'updateRole'])->middleware('auth:api
 Route::delete('/role', [RoleController::class, 'removeRole'])->middleware('auth:api');
 Route::get('/role/list', [RoleController::class, 'getAllRoles'])->middleware('auth:api');
 
+Route::get('/user/friends/{id?}', [Messages::class, 'get'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::post('/user/friends/{id}', [UserController::class, 'addUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::put('/user/friends/accept/{id}', [UserController::class, 'acceptUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::post('/user/friends/delete/{id}', [UserController::class, 'deleteUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
 Route::post('/user/friends/block/{id}', [UserController::class, 'blockUserFriend'])->middleware('auth:api')->where(['id' => '[0-9]+']);
-
+Route::get('/conversation/{id}', [Messages::class, 'getMessagesFor'])->middleware('auth:api');
+Route::post('/conversation/send', [Messages::class, 'send'])->middleware('auth:api');
 
 Route::post('/posts', [PostController::class, 'createPost'])->middleware('auth:api');
 Route::get('/posts/{id}', [PostController::class, 'getPost'])->middleware('auth:api')->where(['id' => '[0-9]+']);

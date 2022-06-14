@@ -102,7 +102,7 @@ class PostController extends Controller
         $post['user_id'] = Auth::id();
         $post['image_src'] = $image;
 
-        $post = $this->postsService->createPost(NewPostCreationDto::from($post));
+        $post = $this->postsService->createPost($post);
 
         return response()->json(['post' => $post], 200);
     }

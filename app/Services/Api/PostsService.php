@@ -21,20 +21,20 @@ class PostsService
         $this->imageService = $imageService;
     }
 
-    /**
-     * @param NewPostCreationDto $postsDto
-     * @return NewPostDto
-     */
-    public function createPost(NewPostCreationDto $postsDto): NewPostDto
+
+    public function createPost($postsDto)
     {
 
         $post = Posts::create([
-            'header' => $postsDto->header,
-            'content' => $postsDto->content,
-            'image_src' => $postsDto->image_src,
-            'user_id' => $postsDto->user_id,
+            'header' => $postsDto['header'],
+            'content' => $postsDto['content'],
+            'image_src' => $postsDto['image_src'],
+            'user_id' => $postsDto['user_id'],
 
-        ])->getData();
+        ]);
+
+//        $post->image_src = $this->imageService->getImageUrl($post->image_src);
+        $post->user_id = (User::find($post->user_id))->toArray();
 
         return $post;
     }
@@ -53,6 +53,7 @@ class PostsService
         }
 
         $post->image_src = $this->imageService->getImageUrl($post->image_src);
+        $post->user_id = (User::find($post->user_id))->toArray();
         return NewPostDto::from($post);
     }
 
@@ -118,9 +119,14 @@ class PostsService
 
     public function getPostsByPage(int $page = 1, int $recordsPerPage = 10): DataCollection
     {
-        $users = Posts::paginate($recordsPerPage);
+        $posts = Posts::orderBy('created_at', 'desc')->paginate($recordsPerPage);
+        $items = $posts->items();
+        foreach ($items as &$item){
+            $user = User::find($item->user_id);
+            $item->user_id = $user->toArray();
+        }
 
-        return NewPostDto::collection($users);
+        return NewPostDto::collection($items);
 
     }
 
