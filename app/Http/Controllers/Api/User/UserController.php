@@ -6,6 +6,7 @@ use App\DTO\User\UserDto;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\User\UpdateUserRequest;
 use App\Http\Requests\Api\User\UpdateUserRoleRequest;
+use App\Models\User;
 use App\Services\Api\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -109,5 +110,13 @@ class UserController extends Controller
         }
 
         return response()->json(['user' => $friendId]);
+    }
+
+    public function listOfUserFriends(int $userId = 0): JsonResponse
+    {
+        $id = $userId ? $userId : Auth::id();
+        $user = User::find($id);
+        $friends = $user->friends();
+        return response()->json(['friends' => $friends]);
     }
 }
